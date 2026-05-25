@@ -3,7 +3,7 @@ import pool from "../config/db.js";
 const createUserTable = async () => {   
     const queryText = `
     CREATE TABLE IF NOT EXISTS users (
-      id INT PRIMARY KEY AUTO_INCREMENT,
+      id SERIAL PRIMARY KEY,
       email VARCHAR(255) NOT NULL UNIQUE,
       name VARCHAR(255) NOT NULL,
       createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -19,4 +19,3 @@ const createUserTable = async () => {
 };
 
 export default createUserTable;
-   

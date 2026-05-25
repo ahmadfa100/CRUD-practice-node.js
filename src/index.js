@@ -4,6 +4,7 @@ import dotenv from "dotenv"
 import pool from "./config/db.js"
 import userRoutes from "./routes/userRoutes.js"
 import errorHandling from "./middlewares/errorHandling.js"
+import createUserTable from "./data/userTable.js"
 dotenv.config()
 
 const app = express();
@@ -22,6 +23,8 @@ app.use("/api", userRoutes)
 
 app.use(errorHandling)
 
+// Create table before starting the server
+createUserTable()
 // Test Postgrest connection:
 app.get("/test-db-connection", async(req, res)=>{
     const result = await pool.query("SELECT current_database()")
