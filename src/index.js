@@ -1,6 +1,7 @@
 import express from "express"
 import cors from "cors"
 import dotenv from "dotenv"
+import pool from "./config/db.js"
 
 dotenv.config()
 
@@ -14,6 +15,12 @@ app.use(cors())
 //routes
 
 // Error handling middleware
+
+// Test Postgrest connection:
+app.get("/test-db-connection", async(req, res)=>{
+    const result = await pool.query("SELECT current_database()")
+    res.send("The Database name is: " + result.rows[0].current_database);
+});
 
 // Server running
 app.listen(PORT,()=>{
