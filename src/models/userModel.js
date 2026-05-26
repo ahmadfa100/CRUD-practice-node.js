@@ -9,8 +9,13 @@ export const getAllUsersByIdService = async(id)=>{
     const result = await pool.query("SELECT * FROM users where id = $1", [id]);
     return result.rows[0];
 }
-export const createUserService = async(name, email)=>{
-    const result = await pool.query("INSERT into users (name, email) values ($1, $2) returning *", [name, email]);
+
+export const getUserByEmailService = async(email)=>{
+    const result = await pool.query("SELECT * FROM users where email = $1", [email])
+}
+export const createUserService = async(name, email, hashedPassword)=>{
+    const result = await pool.query(
+        "INSERT into users (name, email, password) values ($1, $2, $3) returning *", [name, email, hashedPassword]);
     return result.rows[0];
 }
 export const updateUserService = async(id, name, email)=>{

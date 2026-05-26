@@ -3,7 +3,7 @@ const errorHandling = (err, req, res, next)=>{
     res.status(500).json({
         status:500,
         message : "Internal Server Error",
-        error : error.message,
+        error : err.message,
     });
 }
 export default errorHandling

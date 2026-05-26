@@ -3,6 +3,7 @@ import cors from "cors"
 import dotenv from "dotenv"
 import pool from "./config/db.js"
 import userRoutes from "./routes/userRoutes.js"
+import authRoutes from "./routes/authRoutes.js"
 import errorHandling from "./middlewares/errorHandling.js"
 import createUserTable from "./data/userTable.js"
 dotenv.config()
@@ -16,6 +17,7 @@ app.use(cors())
 
 // Routes
 
+app.use("/api", aut)
 app.use("/api", userRoutes)
 
 
