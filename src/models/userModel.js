@@ -12,6 +12,8 @@ export const getAllUsersByIdService = async(id)=>{
 
 export const getUserByEmailService = async(email)=>{
     const result = await pool.query("SELECT * FROM users where email = $1", [email])
+
+    return result.rows[0];
 }
 export const createUserService = async(name, email, hashedPassword)=>{
     const result = await pool.query(
