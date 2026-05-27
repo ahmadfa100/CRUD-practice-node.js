@@ -12,31 +12,31 @@ import {
 } from "@mui/material";
 import { useAuth } from "../context/AuthContext";
 
-const Register = ()=>{
-    const navigate = useNavigate();
-    const {register} = useAuth();
+const Register = () => {
+  const navigate = useNavigate();
+  const { register } = useAuth();
 
-    const [formDate, setFormDate] = useState({
-        name:"",
-        email:"",
-        password:"",
-        confirmPassword:"",
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (event) => {
+    const inputName = event.target.name;
+    const inputValue = event.target.value;
+
+    setFormData({
+      ...formData,
+      [inputName]: inputValue,
     });
+  };
 
-    const [error,setError] = useState("");
-    const [loading, setLoading] = useState(false);
-
-    const handleChange =(event)=>{
-        const {name, value} = event.target;
-    }
-
-    setFormDate({
-        ...formDate,
-        [inputName] : inputValue,
-
-    });
-    const validateForm = () => {
+  const validateForm = () => {
     if (
       !formData.name ||
       !formData.email ||
@@ -66,35 +66,39 @@ const Register = ()=>{
     return true;
   };
 
-  const handleSubmit= async(event)=>{
-        event.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-        const isValid = validateForm();
-        if(!isValid){
-            return;
-        }
-        try{
-            setLoading(true)
-            setError("")
+    const isValid = validateForm();
 
-            await register(
-                formDate.name,
-                formDate.email,
-                formDate.password,
-                formDate.confirmPassword,
-            );
-            navigate("/home")
-        }
-        catch(error){
-            const message= error.response?.data?.message|| "Register Falied"
-            setError(message)
-        }finally{
-            setLoading(false);
-        }
-        
+    if (!isValid) {
+      return;
+    }
 
-  }
-   return (
+    try {
+      setLoading(true);
+      setError("");
+
+      await register(
+        formData.name,
+        formData.email,
+        formData.password,
+        formData.confirmPassword
+      );
+
+      navigate("/home");
+    } catch (error) {
+      const message =
+        error.response?.data?.message ||
+        "Registration failed. Please try again.";
+
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
     <Container maxWidth="sm">
       <Box
         sx={{
@@ -187,7 +191,3 @@ const Register = ()=>{
 };
 
 export default Register;
-
-
-
-
